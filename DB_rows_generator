@@ -1,0 +1,62 @@
+from datetime import date;
+from datetime import time;
+from datetime import timedelta;
+import datetime;
+
+def main(){
+    println("how many days would you like to order for?")
+    int days_to_order_for = input()
+    println()
+    println("Enter start day: ")
+    int start_day = input()
+    println()
+    println("Enter start month: ")
+    int start_month = input()
+    println()
+    println("Enter start year: ")
+    int start_year = input()
+    println()
+    
+
+
+    createOrders(days_to_order_for, start_day, start_month, start_year)
+    return 0;
+}
+
+def createOrders(days_to_order_for = 0, start_day = 0, start_month = 0, start_year = 0):
+    delta = datetime.timedelta(days=1)
+    my_date = datetime.datetime(start_year, start_month, start_day, 12, 0, 0)
+
+    orders = open("Orders.csv", "w")
+    itemSold = open("itemSold.csv", "w")
+    total_sales = 0.0
+    order_ID = 0
+    order_total = 0.0
+    daily_min_sales =  2740.0
+
+    
+
+    for x in range(days_to_order_for):
+        daily_sales_tracker = 0
+
+        while (daily_sales_tracker < daily_min_sales):
+            order_total = 0.0
+
+            # //write ORDER_ID
+            orders.write(order_ID + ",")
+            # //write DATE
+            orders.write(my_date.day + "/" + my_date.month + "/" + my_date.year + ",")
+            # write order COST
+            orders.write(order_total)
+
+            total_sales = total_sales + order_total
+            daily_sales_tracker = daily_sales_tracker + order_total
+
+        my_date = my_date + delta;
+
+    orders.close()
+    itemSold.close()
+
+
+
+main()
